@@ -3,4 +3,4 @@ project(EDyA_colaCircular C)
 
 set(CMAKE_C_STANDARD 11)
 
-add_executable(EDyA_colaCircular main.c)
+add_executable(EDyA_colaCircular main.c colaCircular.c colaCircular.h)
