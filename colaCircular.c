@@ -7,10 +7,16 @@
 #include <stdio.h>
 
 int desencolar(Cola * cola) {
-
-    return 0;
+    if(cola->tamanio == 0){
+        printf("La cola esta vacia.\n");
+        return -1;
+    }
+    int pos=cola->posicionDeExtraccion;
+    int num= cola->cola[pos];
+    cola->cola[pos]=-100;
+    cola->posicionDeExtraccion= siguientePosicion(cola,cola->posicionDeExtraccion);
+    return num;
 }
-
 
 void imprimir(Cola *cola) {
     if(cola->tamanio == 0){
@@ -19,17 +25,29 @@ void imprimir(Cola *cola) {
         int i = cola->posicionDeExtraccion;
         int cont=0;
         while(cont<cola->tamanio){
-            printf("%d",cola->cola[i]);
-            i= (i+1)% cola->capacidad; //Avanza en un ciclo circular por el arreglo
+            printf("%d\t",cola->cola[i]);
+            i= (i+1)% cola->capacidad;
             cont++;
         }
         printf("\t");
     }
+    printf("\n");
 }
 
-
 void intercambiarValores(Cola *cola, int posicionEnLaCola, int posicionesHaciaAdelante) {
-    /** agregar código */
+    if(cola->tamanio<2){
+        printf("La cola tiene que tener por lo menos dos elementos.\n");
+        exit(-1);
+    }
+    int cont=0;
+    int pos= posicionEnLaCola;
+    while (cont != posicionesHaciaAdelante){
+        pos= siguientePosicion(cola,posicionEnLaCola);
+        cont++;
+    }
+    int temp= cola->cola[pos];
+    cola->cola[pos] =cola->cola[posicionEnLaCola];
+    cola->cola[posicionEnLaCola]=temp;
 }
 
 Cola * newCola(int capacidad) {
@@ -52,7 +70,6 @@ Cola * newCola(int capacidad) {
 }
 
 void encolar(Cola *cola, int elemento) {
-
     if ( llena(cola) ) {
         printf("La cola esta llena.\n");
         return;
@@ -61,7 +78,6 @@ void encolar(Cola *cola, int elemento) {
     cola->cola[cola->posicionDeInsersion] = elemento;
     cola->posicionDeInsersion = siguientePosicion(cola, cola->posicionDeInsersion);
     cola->tamanio++;
-
 }
 
 int llena(Cola *cola) {
