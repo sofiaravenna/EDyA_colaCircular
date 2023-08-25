@@ -9,12 +9,12 @@
 int desencolar(Cola * cola) {
     if(cola->tamanio == 0){
         printf("La cola esta vacia.\n");
-        return -1;
+        return (-1);
     }
-    int pos=cola->posicionDeExtraccion;
-    int num= cola->cola[pos];
-    cola->cola[pos]=-100;
+    int num= cola->cola[cola->posicionDeExtraccion];
+    cola->cola[cola->posicionDeExtraccion]=-100;
     cola->posicionDeExtraccion= siguientePosicion(cola,cola->posicionDeExtraccion);
+    cola->tamanio--;
     return num;
 }
 
@@ -37,7 +37,7 @@ void imprimir(Cola *cola) {
 void intercambiarValores(Cola *cola, int posicionEnLaCola, int posicionesHaciaAdelante) {
     if(cola->tamanio<2){
         printf("La cola tiene que tener por lo menos dos elementos.\n");
-        exit(-1);
+        return;
     }
     int cont=0;
     int pos= posicionEnLaCola;
